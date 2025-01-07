@@ -1,10 +1,14 @@
 import Image from "next/image";
 import styles from "./page.module.css";
+import Articles from "@/app/pages/articles";
 
 export default function Home() {
   return (
     <div className={styles.page}>
       <main className={styles.main}>
+        <Articles>
+        </Articles>
+
         <Image
           className={styles.logo}
           src="/next.svg"
