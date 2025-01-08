@@ -19,7 +19,7 @@ export default async function Articles() {
     return (
         <ul>
             {articles && articles.map((article) => (
-                <li>{article.title}</li>
+                <li key={article.id}>{article.title}</li>
             ))}
         </ul>
     );

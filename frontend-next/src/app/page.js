@@ -1,13 +1,18 @@
 import Image from "next/image";
-import styles from "./page.module.css";
-import Articles from "@/app/pages/articles";
+import styles from "./page.module.scss";
+import Articles from "@/app/components/articles";
 
 export default function Home() {
   return (
-    <div className={styles.page}>
+    <main className={styles.main}>
+      <section className={styles.globe}>
+
+      </section>
+      <section className={styles.articles}>
+
+      </section>
+      <div className={styles.page}>
       <main className={styles.main}>
-        <Articles>
-        </Articles>
 
         <Image
           className={styles.logo}
@@ -94,6 +99,10 @@ export default function Home() {
           Go to nextjs.org →
         </a>
       </footer>
+
+      <Articles/>
+
     </div>
+    </main>
   );
 }
