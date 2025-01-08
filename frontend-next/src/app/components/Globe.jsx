@@ -39,6 +39,10 @@ function RotatingGlobe() {
     const [rotationSpeed, setRotationSpeed] = useState(0.003); // Vitesse de rotation
     const [scale, setScale] = useState(2.5); // Échelle initiale
     const [isHovered, setIsHovered] = useState(false); // État hover
+    const [isDragging, setIsDragging] = useState(false);
+    const [lastMousePosition, setLastMousePosition] = useState({ x: 0, y: 0 }); // Dernière position de la souris
+    const dragVelocity = useRef({ x: 0, y: 0 }); // Vitesse de rotation pendant le drag
+    const dragDecay = 0.95; // Amortissement de la vitesse
 
     // Données des markers (latitude, longitude)
     const markers = [
@@ -51,31 +55,71 @@ function RotatingGlobe() {
     useFrame(() => {
         if (globeRef.current) {
             // Interpolation pour ralentir ou accélérer en fonction de l'état `isHovered`
-            const targetSpeed = isHovered ? 0 : 0.003; // 0 pour arrêt, 0.01 pour vitesse normale
+            const targetSpeed = isHovered ? 0 : 0.003; // 0 pour arrêt, 0.003 pour vitesse normale
             setRotationSpeed((speed) =>
                 Math.abs(speed - targetSpeed) < 0.0001 ? targetSpeed : speed + (targetSpeed - speed) * 0.03
             );
 
             // Interpolation pour l'échelle
-            const targetScale = isHovered ? 2.6 : 2.5;
+            const targetScale = isHovered ? 2.7 : 2.5;
             setScale((currentScale) =>
                 Math.abs(currentScale - targetScale) < 0.001
                     ? targetScale
                     : currentScale + (targetScale - currentScale) * 0.1
             );
 
-            // Appliquer les transformations
-            globeRef.current.rotation.y += rotationSpeed;
+            // Appliquer la vitesse de rotation liée au drag ou la rotation automatique
+            if (!isDragging) {
+                dragVelocity.current.x *= dragDecay;
+                dragVelocity.current.y *= dragDecay;
+            }
+
+            globeRef.current.rotation.y += rotationSpeed + dragVelocity.current.x; // Rotation horizontale avec vitesse automatique
+            globeRef.current.rotation.x += dragVelocity.current.y; // Rotation verticale
+
+            // Limiter la rotation verticale
+            globeRef.current.rotation.x = Math.max(-Math.PI / 2, Math.min(Math.PI / 2, globeRef.current.rotation.x));
+
             globeRef.current.scale.set(scale, scale, scale);
         }
     });
+
+    // Gestion des événements de souris
+    const handlePointerDown = (event) => {
+        setIsDragging(true);
+        setLastMousePosition({ x: event.clientX, y: event.clientY });
+    };
+
+    const handlePointerMove = (event) => {
+        if (isDragging && globeRef.current) {
+            const deltaX = event.clientX - lastMousePosition.x; // Différence horizontale
+            const deltaY = event.clientY - lastMousePosition.y; // Différence verticale
+
+            // Appliquer la rotation
+            dragVelocity.current.x = deltaX * 0.001; // Sensibilité horizontale
+            dragVelocity.current.y = deltaY * 0.001; // Sensibilité verticale
+
+            // Limiter la rotation X pour éviter un retournement complet
+            globeRef.current.rotation.x = Math.max(-Math.PI / 2, Math.min(Math.PI / 2, globeRef.current.rotation.x));
+
+            setLastMousePosition({ x: event.clientX, y: event.clientY });
+        }
+    };
+
+    const handlePointerUp = () => {
+        setIsDragging(false);
+        setIsHovered(false);
+    };
 
     return (
         <>
             <mesh
                 ref={globeRef}
                 onPointerOver={() => setIsHovered(true)}
-                onPointerOut={() => setIsHovered(false)}
+                onPointerUp={() => setIsDragging(false)}
+                onPointerDown={handlePointerDown}
+                onPointerMove={handlePointerMove}
+                onPointerOut={handlePointerUp}
             >
                 <sphereGeometry args={[1, 64, 64]} />
                 <meshStandardMaterial map={color} normalMap={normal} aoMap={aoMap} />
