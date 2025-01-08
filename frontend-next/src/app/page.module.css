@@ -13,7 +13,6 @@
   min-height: 100svh;
   padding: 80px;
   gap: 64px;
-  font-family: var(--font-geist-sans);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -28,14 +27,16 @@
 }
 
 .main {
+  height: 60vw;
+  background-color: #0f0f0f;
+  margin-top: 100vh;
+  position: relative;
   display: flex;
-  flex-direction: column;
-  gap: 32px;
-  grid-row-start: 2;
+  align-items: center;
+  justify-content: center;
 }
 
 .main ol {
-  font-family: var(--font-geist-mono);
   padding-left: 0;
   margin: 0;
   font-size: 14px;
