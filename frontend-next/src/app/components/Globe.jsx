@@ -173,7 +173,7 @@ function RotatingGlobe(props) {
 export default function Globe() {
     return (
         <Canvas>
-            <ambientLight intensity={15} />
+            <ambientLight intensity={5} />
             <RotatingGlobe />
         </Canvas>
     );
