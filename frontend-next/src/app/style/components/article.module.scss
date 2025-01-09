@@ -8,8 +8,12 @@
 	@include mixins.media-query(variables.$medium-up) {
 		height: 50vw;
 	}
-	transition: opacity 0.3s ease, transform 0.3s ease;
-	overflow-y: hidden;
+	transition: opacity 0.5s ease, transform 0.5s ease;
+	overflow: hidden;
+
+    &--active {
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
 }
 
 .article__image {
@@ -33,6 +37,9 @@
 		right: 0;
 		width: 100%;
 		height: 100%;
+		object-fit: cover;
+		transform: scale(1.1);
+		transition: transform 0.8s ease, filter 0.8s ease;
 	}
 	
 }
