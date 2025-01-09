@@ -1,6 +1,6 @@
 import styles from "../style/components/article.module.scss";
 import globals from "../globals.scss";
-import Image from "next/image";
+import Link from 'next/link';
 
 const Article = ({ article }) => {
     const baseUrl = "http://localhost:1337";
@@ -8,7 +8,7 @@ const Article = ({ article }) => {
     const imageDesktopUrl = baseUrl + article.image_desktop.url
 
     return (
-        <li key={article.id} className={styles.article}>
+        <li key={article.documentId} className={styles.article}>
             <div className={`${styles.article__image} ${styles.image_background} mobile`}>
                 <img
                     className={styles.img}
@@ -35,6 +35,8 @@ const Article = ({ article }) => {
                     {article.location}
                 </p>
                 <p className={styles.article__introduction}>{article.introduction}</p>
+
+                <Link className={styles.article__button} href={`/articles/${article.slug}`}>Voir l'article</Link>
             </div>
 
         </li>
