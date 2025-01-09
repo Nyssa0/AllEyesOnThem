@@ -1,0 +1,15 @@
+@use "style/reset.scss";
+@use "style/variables.scss" as variables;
+@use "style/mixins.scss" as mixins;
+
+.mobile {
+  @include mixins.media-query(variables.$medium-up) {
+    @include mixins.hidden;
+  }
+}
+
+.desktop {
+  @include mixins.media-query(variables.$small) {
+    @include mixins.hidden;
+  }
+}

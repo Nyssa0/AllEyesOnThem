@@ -1,0 +1,11 @@
+@use "../variables" as variables;
+@use "../mixins" as mixins;
+
+.article {
+	background-color: variables.$white;
+}
+
+.image {
+	width: 100%;
+	height: auto;
+}

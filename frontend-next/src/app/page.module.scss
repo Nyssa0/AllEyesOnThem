@@ -1,5 +1,5 @@
-@use "style/variables.module" as variables;
-@use "style/mixins.module" as mixins;
+@use "style/variables" as variables;
+@use "style/mixins" as mixins;
 @use "style/globe.module" as globe;
 
 .page {
