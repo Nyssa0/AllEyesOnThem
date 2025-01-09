@@ -1,6 +1,6 @@
 @use "style/variables" as variables;
 @use "style/mixins" as mixins;
-@use "style/globe.module" as globe;
+@use "style/components/globe" as globe;
 
 .page {
   //--gray-rgb: 0, 0, 0;
@@ -177,7 +177,7 @@ a.secondary {
 .globe {
 	height: 100vh;
 	background-color: red;
-	
+
 	@include mixins.media-query(variables.$medium-up) {
 		background-color: blue;
 	}

@@ -1,7 +1,13 @@
 'use client';
-import { Canvas, useLoader, useFrame } from '@react-three/fiber';
+import styles from "../style/components/globe.scss";
+import { Canvas, useLoader, useFrame, extend } from '@react-three/fiber';
 import { TextureLoader } from 'three';
-import { useRef, useState } from 'react';
+import {useEffect, useRef, useState} from 'react';
+import { CSS2DRenderer, CSS2DObject } from 'three/examples/jsm/renderers/CSS2DRenderer';
+import { useThree } from '@react-three/fiber';
+
+// Étendre le renderer pour CSS2D
+extend({ CSS2DRenderer });
 
 // Convertir latitude/longitude en coordonnées 3D
 function latLongToXYZ(lat, lon, radius = 1) {
@@ -14,14 +20,70 @@ function latLongToXYZ(lat, lon, radius = 1) {
 
     return [x, y, z];
 }
+function CSS2DRendererSetup() {
+    const { gl, scene, camera } = useThree();
 
-// Composant pour les markers
-function Marker({ position }) {
+    useEffect(() => {
+        const labelRenderer = new CSS2DRenderer();
+        labelRenderer.setSize(window.innerWidth, window.innerHeight);
+        labelRenderer.domElement.style.position = 'absolute';
+        labelRenderer.domElement.style.top = '0px';
+        labelRenderer.domElement.style.pointerEvents = 'none'; // Pour éviter de bloquer l'interaction avec la scène
+        document.body.appendChild(labelRenderer.domElement);
+
+        const render = () => {
+            labelRenderer.render(scene, camera);
+        };
+
+        gl.setAnimationLoop(render);
+
+        return () => {
+            gl.setAnimationLoop(null);
+            document.body.removeChild(labelRenderer.domElement);
+        };
+    }, [gl, scene, camera]);
+
+    return null;
+}
+
+// Ajouter un marqueur CSS2D
+function Marker({ position, text }) {
+    const markerRef = useRef();
+
+    useEffect(() => {
+        if (!markerRef.current) return;
+
+        const div = document.createElement('div');
+        div.className = 'marker';
+        div.textContent = text;
+        div.style.color = 'white';
+        div.style.borderRadius = '4px';
+        div.style.padding = '5px';
+        div.style.fontSize = '12px';
+
+        const cssObject = new CSS2DObject(div);
+        cssObject.position.set(...position);
+
+        markerRef.current.add(cssObject);
+
+        return () => {
+            if (markerRef.current) {
+                markerRef.current.remove(cssObject);
+            }
+        };
+    }, [position, text]);
+
+    return <group ref={markerRef}></group>;
+}
+
+function Markers({ markers, radius = 1 }) {
     return (
-        <mesh position={position}>
-            <sphereGeometry args={[0.03, 16, 16]} />
-            <meshStandardMaterial color="red" />
-        </mesh>
+        <>
+            {markers.map((marker, index) => {
+                const [x, y, z] = latLongToXYZ(marker.lat, marker.lon, radius); // Légèrement au-dessus du globe
+                return <Marker key={index} position={[x, y, z]} text={marker.label} />;
+            })}
+        </>
     );
 }
 
@@ -46,9 +108,10 @@ function RotatingGlobe() {
 
     // Données des markers (latitude, longitude)
     const markers = [
-        { lat: 48.8566, lon: 2.3522, name: 'Paris' }, // Paris
-        { lat: 40.7128, lon: -74.006, name: 'New York' }, // New York
-        { lat: 35.6895, lon: 139.6917, name: 'Tokyo' }, // Tokyo
+        { lat: 48.8566, lon: 2.3522 }, // Paris, France
+        { lat: 40.7128, lon: -74.006 }, // New York, USA
+        { lat: 35.6895, lon: 139.6917 }, // Tokyo, Japon
+        { lat: -33.8688, lon: 151.2093 }, // Sydney, Australie
     ];
 
     // Rotation à chaque frame
@@ -123,19 +186,44 @@ function RotatingGlobe() {
             >
                 <sphereGeometry args={[1, 64, 64]} />
                 <meshStandardMaterial map={color} normalMap={normal} aoMap={aoMap} />
+                <Markers markers={markers} radius={1} />
             </mesh>
-
-            {markers.map((marker, index) => {
-                const position = latLongToXYZ(marker.lat, marker.lon, 10.02); // Position légèrement au-dessus de la surface
-                return <Marker key={index} position={position} />;
-            })}
         </>
     );
 }
 
+function CSS2DRendererWrapper() {
+    const { gl, scene, camera } = useThree();
+    const rendererRef = useRef();
+
+    useEffect(() => {
+        const renderer = new CSS2DRenderer();
+        renderer.domElement.style.position = 'absolute';
+        renderer.domElement.style.top = '0';
+        renderer.domElement.style.pointerEvents = 'none';
+        renderer.domElement.style.zIndex = '10';
+        document.body.appendChild(renderer.domElement);
+        rendererRef.current = renderer;
+
+        return () => {
+            document.body.removeChild(renderer.domElement);
+        };
+    }, []);
+
+    useFrame(() => {
+        if (rendererRef.current) {
+            rendererRef.current.render(scene, camera);
+        }
+    });
+
+    return null;
+}
+
+
 export default function Globe() {
     return (
         <Canvas>
+            <CSS2DRendererSetup />
             <ambientLight intensity={5} />
             <RotatingGlobe />
         </Canvas>
