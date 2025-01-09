@@ -13,7 +13,7 @@
     @include mixins.hidden;
   }
 }
-input {
-  caret-color: transparent;
-  outline: 0;
+
+html {
+  scroll-behavior: smooth;
 }

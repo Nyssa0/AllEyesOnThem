@@ -59,9 +59,8 @@ input {
   }
 }
 
-input {
-  caret-color: transparent;
-  outline: 0;
+html {
+  scroll-behavior: smooth;
 }
 
 /*# sourceMappingURL=globals.css.map */
