@@ -1,5 +1,5 @@
 import { Inter } from "next/font/google";
-import "./globals.css";
+import "./globals.scss";
 
 const geistSans = Inter({
   variable: "--font-geist-sans",
