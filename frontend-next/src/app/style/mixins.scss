@@ -1,0 +1,29 @@
+@use 'sass:list';
+@use "variables" as variables;
+
+@mixin hidden {
+	display: none !important;
+	visibility: hidden !important;
+}
+
+@mixin force-visible {
+	display: block !important;
+	visibility: visible !important;
+}
+
+@mixin media-query($mq) {
+	$breakpoint-found: false;
+	
+	@each $media-query in variables.$media-queries {
+		$name: list.nth($media-query, 1);
+		$declaration: list.nth($media-query, 2);
+		
+		@if $mq == $name and $declaration {
+			$breakpoint-found: true;
+			
+			@media only screen and #{$declaration} {
+				@content;
+			}
+		}
+	}
+}

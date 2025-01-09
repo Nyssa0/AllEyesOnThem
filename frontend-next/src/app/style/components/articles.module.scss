@@ -1,0 +1,6 @@
+@use "../variables" as variables;
+@use "../mixins" as mixins;
+
+.articles {
+	background-color: variables.$black;
+}
