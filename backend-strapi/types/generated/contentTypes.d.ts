@@ -390,12 +390,14 @@ export interface ApiArticleArticle extends Struct.CollectionTypeSchema {
     image_mobile: Schema.Attribute.Media<
       'images' | 'files' | 'videos' | 'audios'
     >;
+    introduction: Schema.Attribute.Text;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::article.article'
     > &
       Schema.Attribute.Private;
+    location: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
     title: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;

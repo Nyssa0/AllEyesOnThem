@@ -6,7 +6,6 @@ async function getStrapiData(url) {
     try {
         const response = await fetch(baseUrl + url);
         const data = await response.json();
-        console.log(data)
         return data;
     } catch (error) {
         console.error(error);

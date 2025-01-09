@@ -2,6 +2,10 @@
 @use "style/variables.scss" as variables;
 @use "style/mixins.scss" as mixins;
 
+body {
+  font-family: variables.$font-family;
+}
+
 .mobile {
   @include mixins.media-query(variables.$medium-up) {
     @include mixins.hidden;

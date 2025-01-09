@@ -1,6 +1,140 @@
 @use 'sass:list';
 @use "variables" as variables;
 
+@mixin title($size, $color: 'dark') {
+	display: block;
+	font-weight: variables.$font-weight-bold;
+	text-transform: uppercase;
+	
+	@if $color == 'dark' {
+		color: variables.$black;
+	} @else if $color == 'light' {
+		color: variables.$white;
+	} @else {
+		color: $color;
+	}
+	
+	@if $size == 'h1' {
+		font-size: 35px;
+		line-height: 35px;
+		
+		@include media-query(variables.$medium-up) {
+			font-size: 60px;
+			line-height: 60px;
+		}
+		
+		@include media-query(variables.$large-up) {
+			font-size: 75px;
+			line-height: 75px;
+		}
+		
+		@include media-query(variables.$widescreen-up) {
+			font-size: 80px;
+			line-height: 80px;
+		}
+	}
+	
+	@if $size == 'h2' {
+		font-size: 25px;
+		line-height: 25px;
+		
+		@include media-query(variables.$medium-up) {
+			font-size: 40px;
+			line-height: 40px;
+		}
+		
+		@include media-query(variables.$large-up) {
+			font-size: 45px;
+			line-height: 45px;
+		}
+		
+		@include media-query(variables.$widescreen-up) {
+			font-size: 50px;
+			line-height: 50px;
+		}
+	}
+	
+	@if $size == 'h3' {
+		font-size: 20px;
+		line-height: 20px;
+		
+		@include media-query(variables.$medium-up) {
+			font-size: 30px;
+			line-height: 30px;
+		}
+		
+		@include media-query(variables.$large-up) {
+			font-size: 35px;
+			line-height: 35px;
+		}
+		
+		@include media-query(variables.$widescreen-up) {
+			font-size: 40px;
+			line-height: 40px;
+		}
+	}
+	
+	@if $size == 'h4' {
+		font-size: 20px;
+		line-height: 20px;
+		
+		@include media-query(variables.$medium-up) {
+			font-size: 25px;
+			line-height: 25px;
+		}
+		
+		@include media-query(variables.$large-up) {
+			font-size: 30px;
+			line-height: 30px;
+		}
+	}
+	
+	@if $size == 'h5' {
+		font-size: 13px;
+		line-height: 13px;
+		
+		@include media-query(variables.$medium-up) {
+			font-size: 17px;
+			line-height: 17px;
+		}
+		
+		@include media-query(variables.$large-up) {
+			font-size: 20px;
+			line-height: 20px;
+		}
+	}
+	
+	@if $size == 'h6' {
+		font-size: 16px;
+		line-height: 16px;
+	}
+}
+
+@mixin paragraph($color: 'dark') {
+	font-size: 12px;
+	font-weight: variables.$font-weight-light;
+	line-height: 18px;
+	
+	@include media-query(variables.$medium-up) {
+		font-size: 14px;
+		line-height: 26px;
+	}
+	
+	@include media-query(variables.$large-up) {
+		font-size: 16px;
+		line-height: 30px;
+	}
+	
+	@if $color == 'dark' {
+		color: variables.$black;
+	} @else if $color == 'light' {
+		color: variables.$white;
+	} @else {
+		color: $color;
+	}
+}
+
+
 @mixin hidden {
 	display: none !important;
 	visibility: hidden !important;
@@ -9,6 +143,31 @@
 @mixin force-visible {
 	display: block !important;
 	visibility: visible !important;
+}
+
+@mixin overlay-background($type: 'full', $opacity: 0.5, $color: variables.$black) {
+	&:after {
+		z-index: 4;
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		content: '';
+		pointer-events: none;
+		
+		@if $type == 'full' {
+			background-color: rgba($color, $opacity);
+		}
+		
+		@if $type == 'left' {
+			background: linear-gradient(-90deg, rgba($color, 0) 0%, rgba($color, $opacity) 100%);
+		}
+		
+		@if $type == 'bottom' {
+			background: linear-gradient(180deg, rgba($color, 0) 0%, rgba($color, $opacity) 100%);
+		}
+	}
 }
 
 @mixin media-query($mq) {

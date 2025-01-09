@@ -2,10 +2,85 @@
 @use "../mixins" as mixins;
 
 .article {
-	background-color: variables.$white;
+	position: relative;
+	height: 150vw;
+	
+	@include mixins.media-query(variables.$medium-up) {
+		height: 50vw;
+	}
 }
 
-.image {
+.article__image {
+	@include mixins.overlay-background('bottom');
+	
+	z-index: -1;
+	position: relative;
 	width: 100%;
-	height: auto;
+	height: 0;
+	padding-bottom: 150%;
+	
+	@include mixins.media-query(variables.$medium-up) {
+		padding-bottom: 50%;
+	}
+	
+	.img {
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		width: 100%;
+		height: 100%;
+	}
+	
 }
+
+.image_background {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.article__content {
+	height: 100%;
+	padding: 20px;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+}
+
+.article__title {
+	@include mixins.title('h2', variables.$white);
+}
+
+.article__location {
+	color: variables.$white;
+	
+	.article__title + & {
+		margin-top: 10px;
+	}
+	
+	span {
+		margin-right: 5px;
+		
+		svg {
+			width: 16px;
+			height: 16px;
+			display: inline-block;
+			fill: variables.$red;
+		}
+	}
+}
+
+.article__introduction {
+	@include mixins.paragraph('light');
+	
+	.article__location + &,
+	.article__title + & {
+		margin-top: 10px;
+	}
+}
+
+

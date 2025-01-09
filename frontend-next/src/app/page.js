@@ -1,4 +1,3 @@
-'use client';
 import styles from "./page.module.scss";
 import dynamic from "next/dynamic";
 import Articles from "@/app/components/articles";

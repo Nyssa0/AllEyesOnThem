@@ -27,14 +27,21 @@
       ]
     },
     "image_desktop": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
       "allowedTypes": [
         "images",
         "videos",
         "audios",
         "files"
-      ],
-      "type": "media",
-      "multiple": false
+      ]
+    },
+    "introduction": {
+      "type": "text"
+    },
+    "location": {
+      "type": "string"
     }
   }
 }
