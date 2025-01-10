@@ -384,6 +384,9 @@ export interface ApiArticleArticle extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    event: Schema.Attribute.Enumeration<['none', 'soon', 'now']> &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'none'>;
     image_desktop: Schema.Attribute.Media<
       'images' | 'videos' | 'audios' | 'files'
     >;

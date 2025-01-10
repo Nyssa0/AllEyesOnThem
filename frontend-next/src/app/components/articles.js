@@ -1,6 +1,6 @@
 import styles from "../style/components/articles.module.scss";
-import Article from "@/app/components/article";
 import qs from "qs";
+import ArticleTeaser from "@/app/components/articleTeaser";
 
 async function getArticles() {
     const baseUrl = "http://localhost:1337";
@@ -36,7 +36,7 @@ export default async function Articles() {
         <section id="articles">
             <ul className={styles.articles}>
                 {articles && articles.map((article) => (
-                    <Article article={article} />
+                    <ArticleTeaser article={article} />
                 ))}
             </ul>
         </section>

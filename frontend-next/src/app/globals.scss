@@ -1,6 +1,7 @@
 @use "style/reset.scss";
 @use "style/variables.scss" as variables;
 @use "style/mixins.scss" as mixins;
+@use "style/article.scss";
 
 body {
   font-family: variables.$font-family;
@@ -16,4 +17,55 @@ body {
   @include mixins.media-query(variables.$small) {
     @include mixins.hidden;
   }
+}
+
+.pages {
+  display: grid;
+  width: 100%;
+  min-height: 100vh;
+  background-color: white;
+}
+
+.page {
+  position: relative;
+  min-width: 0;
+  grid-row: 1;
+  grid-column: 1;
+  background-color: var(--swup-blue);
+  z-index: 2;
+}
+
+.page+.page {
+  z-index: 1;
+}
+
+.page--1 {
+  background-color: variables.$black;
+}
+
+html {
+  --origin-x: calc(var(--click-x, 0.5) * 100%);
+  --origin-y: calc(var(--click-y, 0.5) * 100%);
+}
+
+html.is-changing .transition-reveal {
+  transition: clip-path 1s cubic-bezier(0.5, 0, 0.15, 1), mask-position 1s cubic-bezier(0.5, 0, 0.15, 1);
+  transition: clip-path 1s cubic-bezier(0.5, 0, 0.15, 1), -webkit-mask-position 1s cubic-bezier(0.5, 0, 0.15, 1);
+}
+
+html.to-gradient .transition-reveal {}
+
+html.to-gradient .page {
+  mask-image: linear-gradient(to left, transparent 33.33%, white 66.66%);
+  mask-size: 300% 100%;
+  mask-position: 0%;
+  -webkit-mask-image: linear-gradient(to left, transparent 33.33%, white 66.66%);
+  -webkit-mask-size: 300% 100%;
+  -webkit-mask-position: 0%;
+}
+
+html.to-gradient .page+.page {
+  mask-position: 100%;
+  -webkit-mask-position: 100%;
+  z-index: 3;
 }

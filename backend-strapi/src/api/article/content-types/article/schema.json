@@ -47,6 +47,16 @@
       "type": "uid",
       "targetField": "title",
       "required": true
+    },
+    "event": {
+      "type": "enumeration",
+      "enum": [
+        "none",
+        "soon",
+        "now"
+      ],
+      "default": "none",
+      "required": true
     }
   }
 }
