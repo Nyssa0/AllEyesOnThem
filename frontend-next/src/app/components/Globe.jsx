@@ -84,7 +84,7 @@ function RotatingGlobe(props) {
             );
 
             // Interpolation pour l'échelle
-            const targetScale = isHovered || isMarkerHovered ? 2.2 : 2;
+            const targetScale = isHovered || isMarkerHovered ? 2 : 2;
             setScale((currentScale) =>
                 Math.abs(currentScale - targetScale) < 0.001
                     ? targetScale
