@@ -1,5 +1,5 @@
 import styles from "../style/components/articles.module.scss";
-import Article from "@/app/components/article";
+import Article from "@/app/components/articleTeaser";
 
 async function getStrapiData(url) {
     const baseUrl = "http://localhost:1337/";
