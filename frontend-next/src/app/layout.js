@@ -1,5 +1,6 @@
 import { Inter } from "next/font/google";
 import "./globals.scss";
+import Script from 'next/script';
 
 const geistSans = Inter({
   variable: "--font-geist-sans",
@@ -14,7 +15,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable}`}>
+      <Script type="module" src="/swup.js" strategy="afterInteractive"/>
+
+      <body className={`${geistSans.variable} pages`}>
         {children}
       </body>
     </html>
