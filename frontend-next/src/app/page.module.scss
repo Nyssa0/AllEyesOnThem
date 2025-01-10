@@ -3,6 +3,24 @@
 @use "style/components/globe" as globe;
 
 .globe {
+	position: relative;
 	height: 100vh;
 	background-color: #212529;
+}
+
+.anchor {
+	position: absolute;
+	bottom: 0;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 85px;
+	transition: bottom 0.3s;
+	
+	&:hover {
+		bottom: -10px;
+	}
+	
+	svg {
+		fill: variables.$white;
+	}
 }
