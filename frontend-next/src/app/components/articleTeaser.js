@@ -1,16 +1,21 @@
+"use client";
 import styles from "../style/components/article-teaser.module.scss";
 import Link from 'next/link';
 import { useEffect, useRef } from "react";
-import styles from "../style/components/article.module.scss";
 import globals from "../globals.scss";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 const ArticleTeaser = ({ article }) => {
-    const baseUrl = "http://localhost:1337";
-    const imageMobileUrl = baseUrl + article.image_mobile.url
-    const imageDesktopUrl = baseUrl + article.image_desktop.url
+    // const baseUrl = "http://localhost:1337";
+    const imageMobileUrl = article.image_mobile.url
+    const imageDesktopUrl = article.image_desktop.url
+
+    const articleRef = useRef(null);
+    const imageRefMobile = useRef(null);
+    const imageRefDesktop = useRef(null);
+    const contentRef = useRef(null);
 
     const renderTag = () => {
         switch (article.event) {
@@ -91,7 +96,6 @@ const ArticleTeaser = ({ article }) => {
     return (
         <li key={article.documentId} className={styles.article__teaser} id={article.slug}>
             <div className={`${styles.article__teaser_image} ${styles.image_background} mobile`} ref={imageRefMobile}>
-                
                 <img
                     className={styles.img}
                     src={imageMobileUrl}
