@@ -307,7 +307,7 @@ export default function Page() {
             <section className={styles.articleSection} ref={(el) => (articleRef.current[6] = el)}>
                 <h2 className={styles.sectionTitle}>Faire un don</h2>
                 <p>Vous pouvez vous engager auprès de ces différents organismes pour apporter une aide financière.</p>
-                <a href={article.donate} className={styles.buttonDonate}>Croix Rouge</a>
+                <a href={article.donate} className={styles.buttonDonate2}>Croix Rouge</a>
             </section>
                     
             {/* Section Events */}

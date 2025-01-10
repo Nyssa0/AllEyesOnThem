@@ -147,3 +147,31 @@
         transition: background-color 0.4s, color 0.2s;
     }
 }
+
+.buttonDonate2 {
+    display: inline-block;
+    background: #588157;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition-duration: 0.4s;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 1rem;
+    text-transform: uppercase;
+    font-weight: bold;
+    margin: 20px 10px;
+
+    &:hover {
+        background: #9EBD9E;
+        box-shadow: 0px 2px 10px 2px #9EBD9E;
+        color: #000;
+    }
+
+    &:active {
+        background: #DBE6DB;
+        box-shadow: 0px 2px 10px 10px #DBE6DB;
+        color: #000;
+    }
+}
