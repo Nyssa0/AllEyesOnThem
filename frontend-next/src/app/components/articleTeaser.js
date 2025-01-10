@@ -20,7 +20,7 @@ const ArticleTeaser = ({ article }) => {
     };
 
     return (
-        <li key={article.documentId} className={styles.article__teaser}>
+        <li key={article.documentId} className={styles.article__teaser} id={article.slug}>
             <div className={`${styles.article__teaser_image} ${styles.image_background} mobile`}>
                 <img
                     className={styles.img}

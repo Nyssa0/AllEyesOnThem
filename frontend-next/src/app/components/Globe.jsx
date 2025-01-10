@@ -150,7 +150,7 @@ function RotatingGlobe(props) {
                 <sphereGeometry args={[1, 64, 64]} />
                 <meshStandardMaterial map={color} normalMap={normal} aoMap={aoMap} />
                 <Marker position={palestineCoords}>
-                    <a href="#palestine" className="marker"
+                    <a href="#le-genocide-en-palestine" className="marker"
                          onPointerOver={() => setIsMarkerHovered(true)}
                          onPointerOut={() => setIsMarkerHovered(false)}
                     >
