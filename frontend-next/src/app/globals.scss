@@ -17,3 +17,7 @@ body {
     @include mixins.hidden;
   }
 }
+
+html {
+  scroll-behavior: smooth;
+}

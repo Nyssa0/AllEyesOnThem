@@ -1,0 +1,1 @@
+{"version":3,"sourceRoot":"","sources":["style/reset.scss","style/mixins.scss","globals.scss"],"names":[],"mappings":"AAAA;EACC;;;AAGD;EACC;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;;;AAGD;EACC;;;AAGD;EACC;;;AAGD;EACC;;;AAGD;EACC;;;AAGD;EACC;EACA;;;AAGD;EACC;EACA;;;AAGD;EACC;EACA;;;ACrBE;ECnBH;IDAC;IACA;;;;AAkBE;ECbH;IDNC;IACA;;;;ACWD;EACE","file":"globals.css"}
