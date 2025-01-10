@@ -1,0 +1,149 @@
+.articlePage {
+        background-color: #081c15; /* Couleur de départ du fond */
+        transition: background-color 0.2s, color 0.2s; /* Animation douce pour la transition */
+        transition: color 1s ease-in-out; /* Douce transition entre noir et blanc */
+
+    
+    font-family: 'Arial', sans-serif;
+
+    /* Style général pour une meilleure lisibilité */
+    p, h1, h2 {
+        margin: 0;
+    }
+
+    overflow-y: hidden;
+}
+
+.light-text {
+    color: #000000; /* Texte noir */
+}
+
+.dark-text {
+    color: #ffffff; /* Texte blanc */
+}
+
+.articleHeader {
+    position: relative;
+    width: 100%;
+    height: 100vh; /* Pleine hauteur pour l'écran */
+    overflow: hidden;
+}
+
+.headerBackground {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #fff; /* Texte blanc */
+    text-align: center;
+}
+
+.articleTitle {
+    font-size: 5rem; /* Taille importante pour le titre */
+    font-weight: bold;
+    text-transform: uppercase;
+    margin: 0;
+    opacity: 0; /* Animation commence cachée */
+}
+
+.articleLocation {
+    position: absolute;
+    bottom: 10%;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0; /* Animation commence cachée */
+}
+
+
+.articleSection {
+    margin-bottom: 60px;
+    text-align: justify;
+    margin: 0 15%;
+
+    .sectionTitle {
+        font-size: 5rem; /* Taille des sous-titres */
+        font-weight: bold;
+        margin: 40px 0;
+        text-align: left;
+    }
+
+    .sectionParagraph {
+        font-size: 1.4rem; /* Taille des paragraphes */
+        line-height: 1.8;
+        margin-bottom: 20px;
+    }
+}
+
+.articleGallery {
+    margin: 40px 0;
+
+    .galleryWrapper {
+        display: flex;
+        gap: 10px; /* Espacement entre les images */
+
+        .galleryImage {
+            flex: 0 0 auto; /* Taille fixe des images */
+            width: 400px;
+            height: auto;
+            border-radius: 8px;
+        }
+    }
+}
+
+
+@keyframes scrollGallery {
+    0% {
+        transform: translateX(0); /* Commence à l'initial */
+    }
+    100% {
+        transform: translateX(-100%); /* Défile sur la largeur complète */
+    }
+}
+
+
+.parallaxSection {
+    position: relative;
+    height: 100vh; /* Section pleine page */
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    text-align: center;
+
+    background-attachment: fixed; /* Effet parallax */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+
+.articleImage {
+    width: 100%;
+}
+
+.buttonDonate {
+    display: inline-block;
+    background-color: #048d4f;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 1rem;
+    text-transform: uppercase;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+    margin: 20px 10px;
+
+    &:hover {
+        background-color: #1e422d;
+        transition: background-color 0.4s, color 0.2s;
+    }
+}
