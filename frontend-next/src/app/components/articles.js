@@ -83,13 +83,13 @@ async function getArticles() {
         {
             "id": 5,
             "documentId": "o4qbso05vmaseif78cmdxmuq",
-            "title": "Congo",
+            "title": "La guerre en Ukraine",
             "createdAt": "2025-01-09T12:56:34.454Z",
             "updatedAt": "2025-01-10T00:27:27.493Z",
             "publishedAt": "2025-01-10T00:27:27.478Z",
             "introduction": "La situation des droits humains est restée très grave, avec des attaques de groupes armés et des forces de sécurité contre des civils, exacerbant une crise humanitaire et provoquant le déplacement de près de sept millions de personnes. Des milliers de civils ont été tués, et des exécutions extrajudiciaires ont eu lieu. Les violences sexuelles et basées sur le genre ont été fréquentes, notamment dans le Nord-Kivu. Les libertés d’expression et de réunion ont été violées, et des journalistes, militants et opposants ont été emprisonnés arbitrairement. Des expulsions forcées liées à des projets miniers et à la conservation ont touché des milliers de personnes, privant certaines de leur logement et de leurs moyens de subsistance. Le conflit a gravement affecté l’éducation des enfants, et des catastrophes naturelles ont fait des centaines de morts. Les prisons étaient surpeuplées et dans des conditions horribles. Aucun progrès n’a été fait pour poursuivre les responsables de violations graves des droits humains.",
-            "location": "Congo",
-            "slug": "congo",
+            "location": "Ukraine",
+            "slug": "ukraine",
             "event": "soon",
             "image_mobile": {
                 "id": 3,
