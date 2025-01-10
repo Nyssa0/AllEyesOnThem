@@ -1,7 +1,11 @@
 'use client';
-import { Canvas, useLoader, useFrame } from '@react-three/fiber';
+import styles from "../style/components/globe.scss";
+import { Canvas, useLoader, useFrame, extend } from '@react-three/fiber';
 import { TextureLoader } from 'three';
-import { useRef, useState } from 'react';
+import {useEffect, useRef, useState} from 'react';
+import { useThree } from '@react-three/fiber';
+import * as THREE from 'three';
+import { useGLTF, Html, OrbitControls, Environment, ContactShadows } from '@react-three/drei'
 
 // Convertir latitude/longitude en coordonnées 3D
 function latLongToXYZ(lat, lon, radius = 1) {
@@ -15,18 +19,43 @@ function latLongToXYZ(lat, lon, radius = 1) {
     return [x, y, z];
 }
 
-// Composant pour les markers
-function Marker({ position }) {
+// Ajouter un marqueur
+function Marker({...props }) {
+    const ref = useRef();
+    const [isOccluded, setOccluded] = useState();
+    const [isInRange, setInRange] = useState();
+    const isVisible = isInRange && !isOccluded;
+    const vec = new THREE.Vector3();
+
+    useFrame((state) => {
+        const range = state.camera.position.distanceTo(ref.current.getWorldPosition(vec)) <= 10;
+        if (range !== isInRange) setInRange(range);
+    });
     return (
-        <mesh position={position}>
-            <sphereGeometry args={[0.03, 16, 16]} />
-            <meshStandardMaterial color="red" />
-        </mesh>
+        <group
+            ref={ref}
+        >
+            <Html
+                transform
+                occlude
+                onOcclude={setOccluded}
+                sprite
+                distanceFactor={10}
+                precision={0.1}
+                style={{
+                    transition: 'all 0.2s',
+                    opacity: isVisible ? 1 : 0,
+                    transform: `scale(${isVisible ? 1 : 0.25})`,
+                }}
+                {...props}
+            >
+            </Html>
+        </group>
+
     );
 }
 
-
-function RotatingGlobe() {
+function RotatingGlobe(props) {
     // Charger les textures
     const [color, normal, aoMap] = useLoader(TextureLoader, [
         './assets/color.jpg',
@@ -37,31 +66,25 @@ function RotatingGlobe() {
     // Référence pour le mesh du globe
     const globeRef = useRef();
     const [rotationSpeed, setRotationSpeed] = useState(0.003); // Vitesse de rotation
-    const [scale, setScale] = useState(2.5); // Échelle initiale
+    const [scale, setScale] = useState(2); // Échelle initiale
     const [isHovered, setIsHovered] = useState(false); // État hover
     const [isDragging, setIsDragging] = useState(false);
     const [lastMousePosition, setLastMousePosition] = useState({ x: 0, y: 0 }); // Dernière position de la souris
     const dragVelocity = useRef({ x: 0, y: 0 }); // Vitesse de rotation pendant le drag
     const dragDecay = 0.95; // Amortissement de la vitesse
-
-    // Données des markers (latitude, longitude)
-    const markers = [
-        { lat: 48.8566, lon: 2.3522, name: 'Paris' }, // Paris
-        { lat: 40.7128, lon: -74.006, name: 'New York' }, // New York
-        { lat: 35.6895, lon: 139.6917, name: 'Tokyo' }, // Tokyo
-    ];
+    const [isMarkerHovered, setIsMarkerHovered] = useState(false); // État global pour le survol des marqueurs
 
     // Rotation à chaque frame
     useFrame(() => {
         if (globeRef.current) {
             // Interpolation pour ralentir ou accélérer en fonction de l'état `isHovered`
-            const targetSpeed = isHovered ? 0 : 0.003; // 0 pour arrêt, 0.003 pour vitesse normale
+            const targetSpeed = isHovered || isMarkerHovered ? 0 : 0.003; // 0 pour arrêt, 0.003 pour vitesse normale
             setRotationSpeed((speed) =>
                 Math.abs(speed - targetSpeed) < 0.0001 ? targetSpeed : speed + (targetSpeed - speed) * 0.03
             );
 
             // Interpolation pour l'échelle
-            const targetScale = isHovered ? 2.7 : 2.5;
+            const targetScale = isHovered || isMarkerHovered ? 2 : 2;
             setScale((currentScale) =>
                 Math.abs(currentScale - targetScale) < 0.001
                     ? targetScale
@@ -111,8 +134,10 @@ function RotatingGlobe() {
         setIsHovered(false);
     };
 
+    const palestineCoords = latLongToXYZ(31.9522, 35.2332, 1.01);
+    const congoCoords = latLongToXYZ(-1.6585, 19.0156, 1.01);
     return (
-        <>
+        <group {...props} dispose={null}>
             <mesh
                 ref={globeRef}
                 onPointerOver={() => setIsHovered(true)}
@@ -120,16 +145,28 @@ function RotatingGlobe() {
                 onPointerDown={handlePointerDown}
                 onPointerMove={handlePointerMove}
                 onPointerOut={handlePointerUp}
+                scale={0.15}
             >
                 <sphereGeometry args={[1, 64, 64]} />
                 <meshStandardMaterial map={color} normalMap={normal} aoMap={aoMap} />
+                <Marker position={palestineCoords}>
+                    <a href="#le-genocide-en-palestine" className="marker"
+                         onPointerOver={() => setIsMarkerHovered(true)}
+                         onPointerOut={() => setIsMarkerHovered(false)}
+                    >
+                    </a>
+                </Marker>
+
+                <Marker position={congoCoords}>
+                    <a href="#congo" className="marker"
+                         onPointerOver={() => setIsMarkerHovered(true)}
+                         onPointerOut={() => setIsMarkerHovered(false)}
+                    >
+                    </a>
+                </Marker>
             </mesh>
 
-            {markers.map((marker, index) => {
-                const position = latLongToXYZ(marker.lat, marker.lon, 10.02); // Position légèrement au-dessus de la surface
-                return <Marker key={index} position={position} />;
-            })}
-        </>
+        </group>
     );
 }
 

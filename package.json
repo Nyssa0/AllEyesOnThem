@@ -1,6 +1,19 @@
 {
+  "scripts": {
+    "frontend": "npm run dev --prefix ../frontend-next/",
+    "backend": "npm run dev --prefix ../backend-strapi/",
+    "clear": "cd frontend-next && rm -rf .next && rm -rf cache",
+    "setup:frontend": "cd frontend-next && npm",
+    "setup:backend": "cd backend-strapi && npm",
+    "setup": "npm install && npm setup:frontend && npm setup:backend",
+    "dev": "npm clear && concurrently \"cd frontend-next && npm run dev\" \"cd backend-strapi && npm run develop\""
+  },
   "dependencies": {
+    "concurrently": "^7.6.0",
+    "next": "^14.2.23",
+    "qs": "^6.13.1",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "swup": "^4.8.1"
   }
 }
