@@ -24,3 +24,42 @@
 		fill: variables.$white;
 	}
 }
+
+.header{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: absolute;
+	top: 3%;
+	left: 50%;
+	transform: translateX(-50%);
+
+	img{
+		object-fit: contain;
+	}
+}
+
+.btn {
+	background: #588157;
+	color: #fff;
+	padding: 1rem 3rem;
+	font-size: 1.5rem;
+	font-weight: 600;
+	border: none;
+	border-radius: 2rem;
+	cursor: pointer;
+	transition-duration: 0.4s;
+	text-decoration: none;
+
+	&:hover {
+		background: #9EBD9E;
+		box-shadow: 0px 2px 10px 2px #9EBD9E;
+		color: #000;
+	}
+
+	&:active {
+		background: #DBE6DB;
+		box-shadow: 0px 2px 10px 10px #DBE6DB;
+		color: #000;
+	}
+}
