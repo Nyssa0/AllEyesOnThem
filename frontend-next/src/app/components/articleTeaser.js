@@ -94,7 +94,7 @@ const ArticleTeaser = ({ article }) => {
         };
     }, []);
     return (
-        <li key={article.documentId} className={styles.article__teaser} id={article.slug}>
+        <li key={article.documentId} className={styles.article__teaser} id={article.slug} ref={articleRef}>
             <div className={`${styles.article__teaser_image} ${styles.image_background} mobile`} ref={imageRefMobile}>
                 <img
                     className={styles.img}
