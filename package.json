@@ -1,15 +1,16 @@
 {
   "scripts": {
-    "frontend": "npm dev --prefix ../frontend/",
-    "backend": "npm dev --prefix ../backend/",
+    "frontend": "npm run dev --prefix ../frontend/",
+    "backend": "npm run dev --prefix ../backend/",
     "clear": "cd frontend && rm -rf .next && rm -rf cache",
     "setup:frontend": "cd frontend && npm",
     "setup:backend": "cd backend && npm",
     "setup": "npm install && npm setup:frontend && npm setup:backend",
-    "dev": "npm clear && concurrently \"cd frontend && npm dev\" \"cd backend && npm develop\""
+    "dev": "npm clear && concurrently \"cd frontend && npm run dev\" \"cd backend && npm run develop\""
   },
   "dependencies": {
     "concurrently": "^7.6.0",
+    "next": "^14.2.23",
     "qs": "^6.13.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
